@@ -43,7 +43,7 @@ namespace spomp
     header.pushString("#include");
     addIncludeToFile("omp.h", header, true);
     header.pushString("#include");
-    addIncludeToFile("../graph.hpp", header, false);
+    addIncludeToFile("../graph.cpp", header, false);
     header.pushString("#include");
     addIncludeToFile("../atomicUtil.h", header, false);
     header.NewLine();
@@ -2755,6 +2755,10 @@ namespace spomp
     else if (type->isGraphType())
     {
       return "graph&";
+    }
+    else if (type->isGNNType())
+    {
+      return "GNN ";
     }
     else if (type->isCollectionType())
     {
