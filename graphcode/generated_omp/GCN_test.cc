@@ -4,14 +4,17 @@ void GCN(graph& g , vector<int> neuronsPerHiddenLayer)
 {
    GNN gnn(g, "../sample_graphs/Amazon/amazon_features.txt", "../sample_graphs/Amazon/amazon_labels.txt");
   gnn.gcnPreprocessing();
-  gnn.initializeLayers(neuronsPerHiddenLayer,"xaviers");
+  gnn.initializeLayers(neuronsPerHiddenLayer,"he");
 
   int num_epoch = 0;
   bool x = true;
   
-double start =  omp_get_wtime();
-  while (x){
-    if (num_epoch == 300 )
+	clock_t time_req;
+
+	// Using pow function
+	time_req = clock();
+    while (x){
+    if (num_epoch == 100 )
       {
       x = false;
     }
@@ -27,7 +30,7 @@ double start =  omp_get_wtime();
           {
           y = false;
         }
-        gnn.forwardPass(nod,layerr);
+        gnn.forwardPass(nod,layerr,1);
 
       }
     }
@@ -39,8 +42,8 @@ double start =  omp_get_wtime();
     cout << "Epoch number is : "<<num_epoch << " with " ;
     gnn.predict();
   }
-double end =  omp_get_wtime();
-cout << "Time taken: " << end-start << endl;
+time_req = clock()- time_req;
+cout << "Time taken for the execution is : " << (float)time_req/CLOCKS_PER_SEC << " seconds" << endl;
 }
 int main(){
     graph G("../sample_graphs/Amazon/amazon_edgelist.txt");
